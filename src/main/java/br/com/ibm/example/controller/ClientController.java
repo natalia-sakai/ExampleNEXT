@@ -42,4 +42,17 @@ public class ClientController {
     public ResponseEntity<Client> save(@RequestBody ClientDto dto) {
         return new ResponseEntity<>(this.service.save(dto), CREATED);
     }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<ClientDto> update(@PathVariable(value = "id") Long id, @RequestBody ClientDto dto) {
+        service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
+
 }
