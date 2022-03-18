@@ -98,7 +98,7 @@ public class ClientServiceTest {
 
         Client expect = clientService.update(1L, cliDto);
 
-        assertEquals("Jim", expect.getName());
+        assertEquals("Jin", expect.getName());
         verify(clientRepository, times(1)).getOne(anyLong());
         verify(clientRepository, times(1)).save(any(Client.class));
     }
