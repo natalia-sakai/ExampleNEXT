@@ -24,22 +24,24 @@ public class ClientController {
     private ClientService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Client>> get() {
+    public ResponseEntity<List<Client>> getAll() {
         return ResponseEntity.ok(this.service.get());
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Client> get(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Client> getById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(this.service.get(id));
     }
 
     @RequestMapping(path = "/name", method = RequestMethod.GET)
-    public ResponseEntity<List<Client>> get(@Param(value = "name") String name) {
+    public ResponseEntity<List<Client>> getByName(@Param(value = "name") String name) {
         return ResponseEntity.ok(this.service.getByName(name));
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Client> save(@RequestBody ClientDto dto) {
+        //todo
+        //perguntar sobre como utilizar esse tipo de return
         return new ResponseEntity<>(this.service.save(dto), CREATED);
     }
 
