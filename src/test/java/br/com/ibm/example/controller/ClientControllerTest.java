@@ -82,7 +82,7 @@ public class ClientControllerTest {
 
         when(service.getByName(anyString())).thenReturn(c);
 
-        mvc.perform(get("/clients/" + anyString())).andExpect(status().isOk());
+        mvc.perform(get("/clients/name" + anyString())).andExpect(status().isOk());
     }
 
     @Test

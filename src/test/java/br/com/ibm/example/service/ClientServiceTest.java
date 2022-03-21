@@ -62,6 +62,9 @@ public class ClientServiceTest {
     @Test
     public void testGetByName() {
         List<Client> cli = new ArrayList<>();
+        Client cOne = new Client(1L, "Jim");
+        cli.add(cOne);
+
         when(clientRepository.findByName("Jim")).thenReturn(cli);
 
         List<Client> c = clientRepository.findByName("Jim");
