@@ -69,11 +69,12 @@ public class ClientService {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(dto.getId().toString()).set(dto);
 
-        return new Client(dto.getId(), dto.getName());
+        return new Client(dto.getId(), dto.getName());  
 //        Client client = new Client(dto.getId(), dto.getName());
 //        return repository.save(client);
     }
 
+    public void delete(Long id) {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = dbFirestore.collection(COL_NAME).document(id.toString()).delete();
 //        repository.deleteById(id);
