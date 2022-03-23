@@ -18,10 +18,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.junit', name: 'junit5-engine', version: '5.0.0-ALPHA'
 	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
-//	implementation group: 'com.google.firebase', name: 'firebase-auth', version: '21.0.2'
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.2'
 	testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.6.4'
-	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+
+//	runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {

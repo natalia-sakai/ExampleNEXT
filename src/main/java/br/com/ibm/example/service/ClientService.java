@@ -16,79 +16,34 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class ClientService {
 
-    public static final String COL_NAME="clients";
     @Autowired
     private ClientRepository repository;
 
-    public List<Client> get() throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<QuerySnapshot> future = dbFirestore.collection(COL_NAME).get();
-
-        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<Client> clients = new ArrayList<>();
-        for (QueryDocumentSnapshot document : documents) {
-            clients.add(document.toObject(Client.class));
-        }
-        return clients;
-//        return repository.findAll();
+    public List<Client> get()  {
+        return repository.findAll();
     }
 
-    public Client get(Long id) throws Exception {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id.toString());
-        ApiFuture<DocumentSnapshot> future = documentReference.get();
-
-        DocumentSnapshot document = future.get();
-
-        Client client = null;
-
-        if(document.exists()) {
-            client = document.toObject(Client.class);
-            return client;
-        }else {
-            return null;
-        }
-//        return repository.getOne(id);
+    public Client get(Long id) {
+        return repository.getOne(id);
     }
 
-    public List<Client> getByName(String name) throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        Object obj = name;
-        ApiFuture<QuerySnapshot> future = dbFirestore.collection(COL_NAME).whereEqualTo("name", obj).get();
-
-        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<Client> clients = new ArrayList<>();
-        for (QueryDocumentSnapshot document : documents) {
-            clients.add(document.toObject(Client.class));
-        }
-        return clients;
-//        return repository.findByName(name);
+    public List<Client> getByName(String name)  {
+        return repository.findByName(name);
     }
 
-    public Client save(ClientDto dto) throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(dto.getId().toString()).set(dto);
-
-        return new Client(dto.getId(), dto.getName());  
-//        Client client = new Client(dto.getId(), dto.getName());
-//        return repository.save(client);
+    public Client save(ClientDto dto) {
+        Client client = new Client(dto.getId(), dto.getName());
+        return repository.save(client);
     }
 
     public void delete(Long id) {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFirestore.collection(COL_NAME).document(id.toString()).delete();
-//        repository.deleteById(id);
+        repository.deleteById(id);
     }
 
-    public Client update(Long id, ClientDto newData) throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id.toString()).set(newData);
-
-        return new Client(newData.getId(), newData.getName());
-
-//        Client entity = repository.getOne(id);
-//        updateData(entity, newData);
-//        return repository.save(entity);
+    public Client update(Long id, ClientDto newData) {
+        Client entity = repository.getOne(id);
+        updateData(entity, newData);
+        return repository.save(entity);
     }
 
     private void updateData(Client entity, ClientDto newData) {

@@ -88,11 +88,12 @@ public class ClientControllerTest {
     @Test
     public void testSave() throws Exception {
         ClientDto cliDto = new ClientDto(1L, "Jim");
+        Client cli = new Client(1L, "Jim");
         String json = new ObjectMapper().writeValueAsString(cliDto);
 
-        when(service.save(cliDto)).thenReturn(new Client());
+        when(service.save(cliDto)).thenReturn(cli);
 
-        mvc.perform(post("/clients").content(json)).andExpect(status().isCreated());
+        mvc.perform(post("/clients").content(json)).andExpect(status().is2xxSuccessful());
     }
 
     @Test
