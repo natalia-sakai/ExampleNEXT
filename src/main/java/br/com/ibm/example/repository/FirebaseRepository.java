@@ -8,16 +8,16 @@ import java.util.List;
 
 @Repository
 public interface FirebaseRepository {
-    List<Client> GetAll();
-
-    Client GetById(String id);
-
-    List<Client> GetByName(String name);
-
-    Client Update(ClientDto entity, String id);
-
-    void Delete(String id);
-
-    Client Save(ClientDto entity);
+//    List<Client> GetAll();
+//
+//    Client GetById(String id);
+//
+//    List<Client> GetByName(String name);
+//
+//    Client Update(ClientDto entity, String id);
+//
+//    void Delete(String id);
+//
+//    Client Save(ClientDto entity);
 }
 
