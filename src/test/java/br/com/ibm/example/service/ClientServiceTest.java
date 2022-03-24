@@ -4,18 +4,15 @@ package br.com.ibm.example.service;
 import br.com.ibm.example.domain.ClientDto;
 import br.com.ibm.example.entity.Client;
 import br.com.ibm.example.repository.ClientRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -86,19 +83,18 @@ public class ClientServiceTest {
     @Test
     public void testDelete() {
         Client c = new Client(1L, "Jim");
-        when(clientRepository.findById(c.getId())).thenReturn(Optional.of(c));
         clientService.delete(c.getId());
         verify(clientRepository).deleteById(c.getId());
     }
 
     @Test
-    public void testUpdate() throws ExecutionException, InterruptedException {
+    public void testUpdate() {
         ClientDto cliDto = new ClientDto(1L, "Jim");
         Client cli = new Client(1L, "Jim");
         Client cliUpdated = new Client(1L, "Jin");
 
         when(clientRepository.getOne(1L)).thenReturn(cli);
-        when(clientRepository.save(any(Client.class))).thenReturn(cliUpdated);
+        when(clientRepository.save(cli)).thenReturn(cliUpdated);
 
         Client expect = clientService.update(1L, cliDto);
 

@@ -3,15 +3,10 @@ package br.com.ibm.example.service;
 import br.com.ibm.example.domain.ClientDto;
 import br.com.ibm.example.entity.Client;
 import br.com.ibm.example.repository.ClientRepository;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class ClientService {

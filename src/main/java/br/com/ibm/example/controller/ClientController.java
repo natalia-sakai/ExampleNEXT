@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -25,25 +27,30 @@ public class ClientController {
     private ClientService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Client>> getAll() throws ExecutionException, InterruptedException {
+    public ResponseEntity<List<Client>> getAll() {
         return ResponseEntity.ok(this.service.get());
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Client> getById(@PathVariable(value = "id") Long id) throws Exception {
+    public ResponseEntity<Client> getById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(this.service.get(id));
     }
 
     @RequestMapping(path = "/name", method = RequestMethod.GET)
-    public ResponseEntity<List<Client>> getByName(@Param(value = "name") String name) throws ExecutionException, InterruptedException {
+    public ResponseEntity<List<Client>> getByName(@Param(value = "name") String name) {
         return ResponseEntity.ok(this.service.getByName(name));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Client> save(@RequestBody ClientDto dto) throws ExecutionException, InterruptedException {
-        //todo
-        //perguntar sobre como utilizar esse tipo de return
-        return new ResponseEntity<>(this.service.save(dto), CREATED);
+    public ResponseEntity<Client> save(@RequestBody ClientDto dto) {
+        Client client = this.service.save(dto);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(client.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(client);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
@@ -53,8 +60,9 @@ public class ClientController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ClientDto> update(@PathVariable(value = "id") Long id, @RequestBody ClientDto dto) throws ExecutionException, InterruptedException {
+    public ResponseEntity<ClientDto> update(@PathVariable(value = "id") Long id, @RequestBody ClientDto dto) {
         service.update(id, dto);
+
         return ResponseEntity.ok().body(dto);
     }
 

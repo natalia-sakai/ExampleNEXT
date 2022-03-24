@@ -74,8 +74,7 @@ public class ClientControllerTest {
 
         mvc.perform(get("/clients/" + anyLong())).andExpect(status().isOk());
     }
-
-    //todo
+    
     @Test
     public void testGetByName() throws Exception {
         List<Client> c = new ArrayList<>();
@@ -93,7 +92,8 @@ public class ClientControllerTest {
 
         when(service.save(cliDto)).thenReturn(cli);
 
-        mvc.perform(post("/clients").content(json)).andExpect(status().is2xxSuccessful());
+        mvc.perform(post("/clients").content(json).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -115,8 +115,8 @@ public class ClientControllerTest {
 
         when(service.update(cliDto.getId(), cliDto)).thenReturn(cli);
 
-        mvc.perform(put("/clients/" + cli.getId())
-            .content(json))
+        mvc.perform(put("/clients/" + cliDto.getId())
+            .content(json).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
     }
 }
